@@ -17,7 +17,7 @@ def check_password():
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page", ["Home", "Data Sertifikat Akreditasi", "Data AMI Program Studi"])
+page = st.sidebar.radio("Choose a page", ["Home", "Data Sertifikat Akreditasi", "Data AMI Program Studi","Form Peminjaman Buku LPM"])
 
 # Display Title and Description
 if page == "Home":
@@ -94,8 +94,7 @@ elif page == "Data Sertifikat Akreditasi":
                     st.success("Data berhasil disimpan!")
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
-
-# page data ami
+                    
 elif page == "Data AMI Program Studi":
     st.title('Data AMI Program Studi')
     st.markdown('Berikut dibawah ini adalah data sertifikat Audit Mutu Internal (AMI) program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 2021.')
@@ -153,5 +152,95 @@ elif page == "Data AMI Program Studi":
                     st.success("Data berhasil disimpan!")
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
+
+# page data buku
+elif page == "Form Peminjaman Buku LPM":
+    st.title('Form Peminjaman Buku LPM')
+    st.markdown('Mohon isi data dengan lengkap dan benar. Terima kasih')
+    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
     
+    # Establishing a Google Sheets connection
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
+    def load_data_buku():
+        # Fetch existing vendors data
+        data = conn.read(worksheet="Data Peminjam Buku", usecols=[1,2,3,4,5], ttl=5)
+        return data.dropna(how="all")
+    
+    existing_data_buku = load_data_buku()
+    st.dataframe(existing_data_buku)
+    
+    TIPE_UNIT = [
+    "Rektorat"
+    "Kantor Sekretariat Rektorat",
+    "Kantor Media Digital",
+    "Kantor Legal",
+    "Lembaga Penjaminan Mutu",
+    "Lembaga Pengembangan Humaniora",
+    "Lembaga Penelitian dan Pengabdian kepada Masyarakat",
+    "Perpustakaan",
+    "Unit Manajemen Risiko",
+    "Direktorat Akademik",
+    "Direktorat Pemelajaran",
+    "Direktorat Perencanaan Strategis dan Pemasaran",
+    "Direktorat Pengelolaan Bisnis, Inovasi dan Kewirausahaan",
+    "Direktorat Kemahasiswaan",
+    "Direktorat Digitalisasi",
+    "Direktorat Urusan Internasional, Kerja Sama, dan Alumni",
+    "Direktorat Organisasi dan Sumber Daya Insani",
+    "Direktorat Manajemen Aset, Keuangan, Dan Sarana Prasarana",
+    "Fakultas Ekonomi",
+    "Fakultas Hukum",
+    "Fakultas Ilmu Sosial dan Ilmu Politik",
+    "Fakultas Teknik",
+    "Fakultas Teknologi Industri",
+    "Fakultas Filsafat",
+    "Fakultas Teknologi Informasi dan Sains",
+    "Fakultas Kedokteran",
+    "Program Vokasi dan Profesi"
+    ]
+    
+    # Initialize the session state for showing/hiding the form
+    if 'show_form' not in st.session_state:
+        st.session_state.show_form = False
+
+    # Toggle the form visibility when the button is clicked
+    if st.button("Tambah Data"):
+        st.session_state.show_form = not st.session_state.show_form
+        
+
+    # Show the form if authenticated
+    if st.session_state.show_form:
+        with st.form(key="data_form", clear_on_submit=True):
+            EMAIL = st.text_input(label="Email*")
+            NAMA_PEMINJAM = st.text_input("Nama Peminjam*")
+            UNIT = st.selectbox(label="Unit*", options=TIPE_UNIT, index=None)
+            JUDUL_BUKU = st.text_input(label="Judul Buku*")
+            TANGGAL_PINJAM = st.date_input(label="Tanggal Pinjam*")
+            TANGGAL_KEMBALI = st.date_input(label="Tanggal Kembali*")
+
+            st.markdown("*Wajib diisi")
+
+            submit_button = st.form_submit_button(label="Submit Data")
+
+            if submit_button:
+                if EMAIL and NAMA_PEMINJAM and UNIT and JUDUL_BUKU and TANGGAL_PINJAM and TANGGAL_KEMBALI:  # Check if required fields are filled
+                    new_data = pd.DataFrame({
+                        "Email": [EMAIL],
+                        "Nama Peminjam": [NAMA_PEMINJAM],
+                        "Unit": [UNIT],
+                        "Judul Buku": [JUDUL_BUKU],
+                        "Tanggal Pinjam": [TANGGAL_PINJAM],
+                        "Tanggal Kembali": [TANGGAL_KEMBALI],
+                    })
+                    updated_df = pd.concat([existing_data_buku, new_data], ignore_index=True)
+                    conn.update(worksheet="Data Peminjam Buku", data=updated_df)
+                    st.success("Data berhasil disimpan!")
+                else:
+                    st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
+                    
+                    
+
+    
+
 
