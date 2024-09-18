@@ -95,7 +95,7 @@ elif page == "Data Sertifikat":
 # page data ami
 elif page == "Data AMI":
     st.title('Data AMI UNPAR')
-    st.markdown('Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).')
+    st.markdown('Berikut dibawah ini adalah data sertifikat Audit Mutu Internal (AMI) program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 2021.')
     
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
