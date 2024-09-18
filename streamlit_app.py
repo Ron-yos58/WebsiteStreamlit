@@ -37,7 +37,7 @@ elif page == "Data Sertifikat Akreditasi":
         return data.dropna(how="all")
 
     existing_data = load_data_sertifikat()
-    st.dataframe(existing_data)
+    st.dataframe(existing_data,use_container_width=True)
 
     TIPE_PENERBIT = [
         "BAN-PT",
@@ -109,7 +109,7 @@ elif page == "Data AMI Program Studi":
         return data.dropna(how="all")
 
     existing_data_AMI = load_data_AMI()
-    st.dataframe(existing_data_AMI)
+    st.dataframe(existing_data_AMI,use_container_width=True)
     
     # Initialize the session state for showing/hiding the form
     if 'show_form' not in st.session_state:
@@ -168,7 +168,7 @@ elif page == "Form Peminjaman Buku LPM":
         return data.dropna(how="all")
     
     existing_data_buku = load_data_buku()
-    st.dataframe(existing_data_buku)
+    st.dataframe(existing_data_buku,use_container_width=True)
     
     TIPE_UNIT = [
     "Rektorat"
