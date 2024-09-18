@@ -233,8 +233,19 @@ elif page == "Form Peminjaman Buku LPM 📚":
                         "Tanggal Pinjam": [TANGGAL_PINJAM],
                         "Tanggal Kembali": [TANGGAL_KEMBALI],
                     })
-                    updated_df = pd.concat([existing_data_buku, new_data], ignore_index=True)
-                    conn.update(worksheet="Data Peminjam Buku", data=updated_df)
+                    # Ambil data yang sudah ada dari Google Sheets
+                    existing_data_buku = conn.read(worksheet="Data Peminjam Buku")
+                    
+                    # Pastikan hanya kolom 0-5 yang akan diperbarui
+                    updated_df = existing_data_buku.iloc[:, :6]  # Ambil kolom 0-5 dari data yang sudah ada
+                    updated_df = pd.concat([updated_df, new_data], ignore_index=True)  # Gabungkan data baru
+                    
+                    # Gabungkan kembali dengan kolom 6 ke atas yang tidak akan diubah
+                    full_data = pd.concat([updated_df, existing_data_buku.iloc[:, 6:]], axis=1)
+
+                    # Update hanya kolom 0-5, tetapi tetap mempertahankan kolom 6 ke atas
+                    conn.update(worksheet="Data Peminjam Buku", data=full_data)
+                    
                     st.success("Data berhasil disimpan!")
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
