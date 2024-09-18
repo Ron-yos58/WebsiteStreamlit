@@ -30,12 +30,12 @@ elif page == "Data Sertifikat":
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
 
-    def load_data():
+    def load_data_sertifikat():
         # Fetch existing vendors data
         data = conn.read(worksheet="Data Sertifikat", usecols=list(range(7)), ttl=5)
         return data.dropna(how="all")
 
-    existing_data = load_data()
+    existing_data = load_data_sertifikat()
     st.dataframe(existing_data)
 
     TIPE_PENERBIT = [
@@ -65,18 +65,18 @@ elif page == "Data Sertifikat":
         with st.form(key="data_form"):
             FAKULTAS = st.text_input(label="Fakultas*")
             PRODI_STUDI = st.text_input("Program Studi*")
-            PERINGKAT = st.text_input("Peringkat")
-            TANGGAL_BERAKHIR = st.date_input(label="Tanggal Berakhir")
-            TAHUN = st.text_input(label="Tahun")
-            LINK = st.text_input(label="Link")
-            PENERBIT = st.selectbox(label="Penerbit", options=TIPE_PENERBIT, index=None)
+            PERINGKAT = st.text_input("Peringkat*")
+            TANGGAL_BERAKHIR = st.date_input(label="Tanggal Berakhir*")
+            TAHUN = st.text_input(label="Tahun*")
+            LINK = st.text_input(label="Link*")
+            PENERBIT = st.selectbox(label="Penerbit*", options=TIPE_PENERBIT, index=None)
 
             st.markdown("*Wajib diisi")
 
             submit_button = st.form_submit_button(label="Submit Data")
 
             if submit_button:
-                if FAKULTAS and PRODI_STUDI:  # Check if required fields are filled
+                if FAKULTAS and PRODI_STUDI and PERINGKAT and TANGGAL_BERAKHIR and TAHUN and LINK and PENERBIT:  # Check if required fields are filled
                     new_data = pd.DataFrame({
                         "Fakultas": [FAKULTAS],
                         "Program Studi": [PRODI_STUDI],
@@ -96,3 +96,57 @@ elif page == "Data Sertifikat":
 elif page == "Data AMI":
     st.title('Data AMI UNPAR')
     st.markdown('Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).')
+    
+    # Establishing a Google Sheets connection
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
+    def load_data_AMI():
+        # Fetch existing vendors data
+        data = conn.read(worksheet="Data AMI", usecols=list(range(7)), ttl=5)
+        return data.dropna(how="all")
+
+    existing_data_AMI = load_data_AMI()
+    st.dataframe(existing_data_AMI)
+    
+    # Initialize the session state for showing/hiding the form
+    if 'show_form' not in st.session_state:
+        st.session_state.show_form = False
+
+    # Toggle the form visibility when the button is clicked
+    if st.button("Tambah Data"):
+        st.session_state.show_form = not st.session_state.show_form
+
+    # Authentication before showing the form
+    if st.session_state.show_form and not st.session_state.authenticated:
+        password = st.text_input("Masukkan password", type="password", key="password")
+        if st.button("Submit Password"):
+            check_password()
+
+    # Show the form if authenticated
+    if st.session_state.show_form and st.session_state.authenticated:
+        with st.form(key="data_form"):
+            FAKULTAS = st.text_input(label="Fakultas*")
+            PRODI_STUDI = st.text_input("Program Studi*")
+            TANGGAL = st.date_input(label="Tanggal*")
+            TAHUN = st.text_input(label="Tahun*")
+            LINK = st.text_input(label="Link*")
+
+            st.markdown("*Wajib diisi")
+
+            submit_button = st.form_submit_button(label="Submit Data")
+
+            if submit_button:
+                if FAKULTAS and PRODI_STUDI and TANGGAL and TAHUN and LINK:  # Check if required fields are filled
+                    new_data = pd.DataFrame({
+                        "Fakultas": [FAKULTAS],
+                        "Program Studi": [PRODI_STUDI],
+                        "Tanggal": [TANGGAL],
+                        "Tahun": [TAHUN],
+                        "Link": [LINK],
+                    })
+                    updated_df = pd.concat([existing_data_AMI, new_data], ignore_index=True)
+                    conn.update(worksheet="Data AMI", data=updated_df)
+                    st.success("Data berhasil disimpan!")
+                else:
+                    st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
+
