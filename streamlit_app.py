@@ -33,7 +33,7 @@ elif page == "Data Sertifikat Akreditasi":
 
     def load_data_sertifikat():
         # Fetch existing vendors data
-        data = conn.read(worksheet="Data Sertifikat", usecols=list(range(7)), ttl=5)
+        data = conn.read(worksheet="Data Sertifikat", usecols=list(range(8)), ttl=5)
         return data.dropna(how="all")
 
     existing_data = load_data_sertifikat()
@@ -69,6 +69,7 @@ elif page == "Data Sertifikat Akreditasi":
             PERINGKAT = st.text_input("Peringkat*")
             TANGGAL_BERAKHIR = st.date_input(label="Tanggal Berakhir*")
             TAHUN = st.text_input(label="Tahun*")
+            ISK = st.text_input(label="ISK")
             LINK = st.text_input(label="Link*")
             PENERBIT = st.selectbox(label="Penerbit*", options=TIPE_PENERBIT, index=None)
 
@@ -77,13 +78,14 @@ elif page == "Data Sertifikat Akreditasi":
             submit_button = st.form_submit_button(label="Submit Data")
 
             if submit_button:
-                if FAKULTAS and PRODI_STUDI and PERINGKAT and TANGGAL_BERAKHIR and TAHUN and LINK and PENERBIT:  # Check if required fields are filled
+                if FAKULTAS and PRODI_STUDI and PERINGKAT and TANGGAL_BERAKHIR and TAHUN and ISK and LINK and PENERBIT:  # Check if required fields are filled
                     new_data = pd.DataFrame({
                         "Fakultas": [FAKULTAS],
                         "Program Studi": [PRODI_STUDI],
                         "Peringkat": [PERINGKAT],
                         "Tanggal Berakhir": [TANGGAL_BERAKHIR],
                         "Tahun": [TAHUN],
+                        "ISK": [ISK],
                         "Link": [LINK],
                         "Penerbit": [PENERBIT]
                     })
@@ -151,4 +153,5 @@ elif page == "Data AMI Program Studi":
                     st.success("Data berhasil disimpan!")
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
+    
 
