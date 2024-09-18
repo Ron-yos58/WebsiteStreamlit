@@ -164,7 +164,7 @@ elif page == "Form Peminjaman Buku LPM 📚":
 
     def load_data_buku():
         # Fetch existing vendors data
-        data = conn.read(worksheet="Data Peminjam Buku", usecols=[1,2,3,4,5], ttl=5)
+        data = conn.read(worksheet="Data Peminjam Buku", usecols=list(range(6)), ttl=5)
         return data.dropna(how="all")
     
     existing_data_buku = load_data_buku()
