@@ -17,15 +17,16 @@ def check_password():
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page", ["Home", "Data Sertifikat", "Data AMI"])
+page = st.sidebar.radio("Choose a page", ["Home", "Data Sertifikat Akreditasi", "Data AMI Program Studi"])
 
 # Display Title and Description
 if page == "Home":
     st.title('Website Informasi LPM UNPAR')
     st.markdown('Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).')
-elif page == "Data Sertifikat":
-    st.title("Data Sertifikat")
+elif page == "Data Sertifikat Akreditasi":
+    st.title("Data Sertifikat Akreditasi")
     st.markdown('Berikut dibawah ini adalah data sertifikat akreditasi program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 1998.')
+    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
 
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
@@ -53,7 +54,7 @@ elif page == "Data Sertifikat":
     # Toggle the form visibility when the button is clicked
     if st.button("Tambah Data"):
         st.session_state.show_form = not st.session_state.show_form
-
+        
     # Authentication before showing the form
     if st.session_state.show_form and not st.session_state.authenticated:
         password = st.text_input("Masukkan password", type="password", key="password")
@@ -62,7 +63,7 @@ elif page == "Data Sertifikat":
 
     # Show the form if authenticated
     if st.session_state.show_form and st.session_state.authenticated:
-        with st.form(key="data_form"):
+        with st.form(key="data_form",clear_on_submit=True):
             FAKULTAS = st.text_input(label="Fakultas*")
             PRODI_STUDI = st.text_input("Program Studi*")
             PERINGKAT = st.text_input("Peringkat*")
@@ -93,9 +94,10 @@ elif page == "Data Sertifikat":
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
 
 # page data ami
-elif page == "Data AMI":
-    st.title('Data AMI UNPAR')
+elif page == "Data AMI Program Studi":
+    st.title('Data AMI Program Studi')
     st.markdown('Berikut dibawah ini adalah data sertifikat Audit Mutu Internal (AMI) program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 2021.')
+    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
     
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
@@ -115,7 +117,7 @@ elif page == "Data AMI":
     # Toggle the form visibility when the button is clicked
     if st.button("Tambah Data"):
         st.session_state.show_form = not st.session_state.show_form
-
+            
     # Authentication before showing the form
     if st.session_state.show_form and not st.session_state.authenticated:
         password = st.text_input("Masukkan password", type="password", key="password")
@@ -124,7 +126,7 @@ elif page == "Data AMI":
 
     # Show the form if authenticated
     if st.session_state.show_form and st.session_state.authenticated:
-        with st.form(key="data_form"):
+        with st.form(key="data_form", clear_on_submit=True):
             FAKULTAS = st.text_input(label="Fakultas*")
             PRODI_STUDI = st.text_input("Program Studi*")
             TANGGAL = st.date_input(label="Tanggal*")
