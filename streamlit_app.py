@@ -39,7 +39,7 @@ if selected == "Home":
 elif selected == "Data Sertifikat Akreditasi":
     st.title("Data Sertifikat Akreditasi")
     st.markdown('Berikut dibawah ini adalah data sertifikat akreditasi program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 1998.')
-    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
+    st.code("Refresh: Tekan 'R' di komputer. Di ponsel: Klik '⋮' > 're-run'.")
 
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
@@ -111,8 +111,8 @@ elif selected == "Data Sertifikat Akreditasi":
 elif selected == "Data AMI Program Studi":
     st.title('Data AMI Program Studi')
     st.markdown('Berikut dibawah ini adalah data sertifikat Audit Mutu Internal (AMI) program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 2021.')
-    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
-    
+    st.code("Refresh: Tekan 'R' di komputer. Di ponsel: Klik '⋮' > 're-run'.")
+        
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -170,7 +170,7 @@ elif selected == "Data AMI Program Studi":
 elif selected == "Form Peminjaman Buku LPM":
     st.title('Form Peminjaman Buku LPM')
     st.markdown('Mohon isi data dengan lengkap dan benar. Terima kasih')
-    st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
+    st.code("Refresh: Tekan 'R' di komputer. Di ponsel: Klik '⋮' > 're-run'.")
     
     # Establishing a Google Sheets connection
     conn = st.connection("gsheets", type=GSheetsConnection)
