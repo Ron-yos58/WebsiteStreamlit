@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
+from streamlit_option_menu import option_menu
 import pandas as pd
 
 # Initialize session state for authentication
@@ -16,14 +17,29 @@ def check_password():
         return False
 
 # Sidebar navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choose a page", ["Home 🏠", "Data Sertifikat Akreditasi 🧾", "Data AMI Program Studi 📜","Form Peminjaman Buku LPM 📚"])
+# st.sidebar.title("Navigation")
+# selected = st.sidebar.radio("Choose a page", ["Home 🏠", "Data Sertifikat Akreditasi 🧾", "Data AMI Program Studi 📜","Form Peminjaman Buku LPM 📚"])
+
+with st.sidebar:
+    selected = option_menu(
+        menu_title="Navigation",
+        options=["Home", "Data Sertifikat Akreditasi", "Data AMI Program Studi", "Form Peminjaman Buku LPM"],
+        icons=["house", "book", "book", "journal-check"],
+        menu_icon="cast",
+        default_index=0,
+        orientation="vertical",
+        styles={
+            "container": {"font-size": "12px"},
+            "icon": {"font-size": "12px"},
+            "nav-link": {"font-size": "12px"},
+        }
+    )
 
 # Display Title and Description
-if page == "Home 🏠":
+if selected == "Home":
     st.title('Website Informasi LPM UNPAR')
     st.markdown('Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).')
-elif page == "Data Sertifikat Akreditasi 🧾":
+elif selected == "Data Sertifikat Akreditasi":
     st.title("Data Sertifikat Akreditasi")
     st.markdown('Berikut dibawah ini adalah data sertifikat akreditasi program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 1998.')
     st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
@@ -95,7 +111,7 @@ elif page == "Data Sertifikat Akreditasi 🧾":
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
                     
-elif page == "Data AMI Program Studi 📜":
+elif selected == "Data AMI Program Studi":
     st.title('Data AMI Program Studi')
     st.markdown('Berikut dibawah ini adalah data sertifikat Audit Mutu Internal (AMI) program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 2021.')
     st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
@@ -154,7 +170,7 @@ elif page == "Data AMI Program Studi 📜":
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
 
 # page data buku
-elif page == "Form Peminjaman Buku LPM 📚":
+elif selected == "Form Peminjaman Buku LPM":
     st.title('Form Peminjaman Buku LPM')
     st.markdown('Mohon isi data dengan lengkap dan benar. Terima kasih')
     st.code("Refresh halaman untuk melihat data terbaru klik tombol 'R'")
