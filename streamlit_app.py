@@ -17,9 +17,6 @@ def check_password():
         return False
 
 # Sidebar navigation
-# st.sidebar.title("Navigation")
-# selected = st.sidebar.radio("Choose a page", ["Home 🏠", "Data Sertifikat Akreditasi 🧾", "Data AMI Program Studi 📜","Form Peminjaman Buku LPM 📚"])
-
 with st.sidebar:
     selected = option_menu(
         menu_title="Navigation",
