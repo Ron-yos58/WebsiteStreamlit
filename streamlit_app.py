@@ -295,9 +295,3 @@ elif selected == "Form Peminjaman Buku LPM":
                     st.success("Data berhasil disimpan!")
                 else:
                     st.error("Gagal menyimpan. Pastikan semua field yang wajib diisi telah terisi.")
-                    
-                    
-
-    
-
-
