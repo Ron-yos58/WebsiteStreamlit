@@ -62,7 +62,7 @@ elif selected == "Data Sertifikat Akreditasi":
     
     # Add a new column 'No.' for numbering starting from 1
     filtered_data = filtered_data.reset_index(drop=True)
-    filtered_data.insert(0, 'No.', range(1, len(filtered_data) + 1))
+    filtered_data.insert(0, 'No', range(1, len(filtered_data) + 1))
     
     # Display the filtered dataframe with the new numbering column
     st.dataframe(filtered_data, use_container_width=True, hide_index=True)
@@ -149,7 +149,7 @@ elif selected == "Data AMI Program Studi":
     
     # Add a new column 'No.' for numbering starting from 1
     filtered_data_ami = filtered_data_ami.reset_index(drop=True)
-    filtered_data_ami.insert(0, 'No.', range(1, len(filtered_data_ami) + 1))
+    filtered_data_ami.insert(0, 'No', range(1, len(filtered_data_ami) + 1))
     
     # Display the filtered dataframe with the new numbering column
     st.dataframe(filtered_data_ami, use_container_width=True, hide_index=True)
@@ -223,7 +223,7 @@ elif selected == "Form Peminjaman Buku LPM":
     
     # Add a new column 'No.' for numbering starting from 1
     filtered_data_buku = filtered_data_buku.reset_index(drop=True)
-    filtered_data_buku.insert(0, 'No.', range(1, len(filtered_data_buku) + 1))
+    filtered_data_buku.insert(0, 'No', range(1, len(filtered_data_buku) + 1))
     
     # Display the filtered dataframe with the new numbering column
     st.dataframe(filtered_data_buku, use_container_width=True, hide_index=True)
