@@ -48,10 +48,21 @@ elif selected == "Data Sertifikat Akreditasi":
         # Fetch existing vendors data
         data = conn.read(worksheet="Data Sertifikat", usecols=list(range(8)), ttl=5)
         return data.dropna(how="all")
-
+     
     existing_data = load_data_sertifikat()
-    st.dataframe(existing_data,use_container_width=True)
 
+    # Add a text input for filtering
+    filter_text = st.text_input("Filter data (ketik untuk memfilter)")
+    
+    # Filter the dataframe based on user input
+    if filter_text:
+        filtered_data = existing_data[existing_data.apply(lambda row: row.astype(str).str.contains(filter_text, case=False).any(), axis=1)]
+    else:
+        filtered_data = existing_data
+    
+    # Display the filtered dataframe
+    st.dataframe(filtered_data, use_container_width=True, hide_index=True)
+    
     TIPE_PENERBIT = [
         "BAN-PT",
         "LAM-MEMBA",
@@ -122,7 +133,18 @@ elif selected == "Data AMI Program Studi":
         return data.dropna(how="all")
 
     existing_data_AMI = load_data_AMI()
-    st.dataframe(existing_data_AMI,use_container_width=True)
+    
+    # Add a text input for filtering
+    filter_text = st.text_input("Filter data (ketik untuk memfilter)")
+    
+    # Filter the dataframe based on user input
+    if filter_text:
+        filtered_data_ami = existing_data_AMI[existing_data_AMI.apply(lambda row: row.astype(str).str.contains(filter_text, case=False).any(), axis=1)]
+    else:
+        filtered_data_ami = existing_data_AMI
+    
+    # Display the filtered dataframe
+    st.dataframe(filtered_data_ami, use_container_width=True, hide_index=True)
     
     # Initialize the session state for showing/hiding the form
     if 'show_form' not in st.session_state:
@@ -181,7 +203,18 @@ elif selected == "Form Peminjaman Buku LPM":
         return data.dropna(how="all")
     
     existing_data_buku = load_data_buku()
-    st.dataframe(existing_data_buku,use_container_width=True)
+    
+    # Add a text input for filtering
+    filter_text = st.text_input("Filter data (ketik untuk memfilter)")
+    
+    # Filter the dataframe based on user input
+    if filter_text:
+        filtered_data_buku = existing_data_buku[existing_data_buku.apply(lambda row: row.astype(str).str.contains(filter_text, case=False).any(), axis=1)]
+    else:
+        filtered_data_buku = existing_data_buku
+    
+    # Display the filtered dataframe
+    st.dataframe(filtered_data_buku, use_container_width=True, hide_index=True)
     
     TIPE_UNIT = [
     "Rektorat"
