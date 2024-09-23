@@ -76,22 +76,24 @@ elif selected == "Data Sertifikat Akreditasi":
     ]
 
     # Initialize the session state for showing/hiding the form
-    if 'show_form' not in st.session_state:
-        st.session_state.show_form = False
+    if 'show_form_sertifikat' not in st.session_state:
+        st.session_state.show_form_sertifikat = False
 
     # Toggle the form visibility when the button is clicked
     if st.button("Tambah Data"):
-        st.session_state.show_form = not st.session_state.show_form
+        st.session_state.show_form_sertifikat = not st.session_state.show_form_sertifikat
+        st.session_state.show_form_ami = False
+        st.session_state.show_form_buku = False
         
     # Authentication before showing the form
-    if st.session_state.show_form and not st.session_state.authenticated:
+    if st.session_state.show_form_sertifikat and not st.session_state.authenticated:
         password = st.text_input("Masukkan password", type="password", key="password")
         if st.button("Submit Password"):
             check_password()
 
     # Show the form if authenticated
-    if st.session_state.show_form and st.session_state.authenticated:
-        with st.form(key="data_form",clear_on_submit=True):
+    if st.session_state.show_form_sertifikat and st.session_state.authenticated:
+        with st.form(key="data_form_sertifikat", clear_on_submit=True):
             FAKULTAS = st.text_input(label="Fakultas*")
             PRODI_STUDI = st.text_input("Program Studi*")
             PERINGKAT = st.text_input("Peringkat*")
@@ -155,22 +157,24 @@ elif selected == "Data AMI Program Studi":
     st.dataframe(filtered_data_ami, use_container_width=True, hide_index=True)
     
     # Initialize the session state for showing/hiding the form
-    if 'show_form' not in st.session_state:
-        st.session_state.show_form = False
+    if 'show_form_ami' not in st.session_state:
+        st.session_state.show_form_ami = False
 
     # Toggle the form visibility when the button is clicked
     if st.button("Tambah Data"):
-        st.session_state.show_form = not st.session_state.show_form
+        st.session_state.show_form_ami = not st.session_state.show_form_ami
+        st.session_state.show_form_sertifikat = False
+        st.session_state.show_form_buku = False
             
     # Authentication before showing the form
-    if st.session_state.show_form and not st.session_state.authenticated:
+    if st.session_state.show_form_ami and not st.session_state.authenticated:
         password = st.text_input("Masukkan password", type="password", key="password")
         if st.button("Submit Password"):
             check_password()
 
     # Show the form if authenticated
-    if st.session_state.show_form and st.session_state.authenticated:
-        with st.form(key="data_form", clear_on_submit=True):
+    if st.session_state.show_form_ami and st.session_state.authenticated:
+        with st.form(key="data_form_ami", clear_on_submit=True):
             FAKULTAS = st.text_input(label="Fakultas*")
             PRODI_STUDI = st.text_input("Program Studi*")
             TANGGAL = st.date_input(label="Tanggal*")
@@ -230,7 +234,7 @@ elif selected == "Form Peminjaman Buku LPM":
 
     
     TIPE_UNIT = [
-    "Rektorat"
+    "Rektorat",
     "Kantor Sekretariat Rektorat",
     "Kantor Media Digital",
     "Kantor Legal",
@@ -260,17 +264,18 @@ elif selected == "Form Peminjaman Buku LPM":
     ]
     
     # Initialize the session state for showing/hiding the form
-    if 'show_form' not in st.session_state:
-        st.session_state.show_form = False
+    if 'show_form_buku' not in st.session_state:
+        st.session_state.show_form_buku = False
 
     # Toggle the form visibility when the button is clicked
     if st.button("Tambah Data"):
-        st.session_state.show_form = not st.session_state.show_form
-        
+        st.session_state.show_form_buku = not st.session_state.show_form_buku
+        st.session_state.show_form_sertifikat = False
+        st.session_state.show_form_ami = False
 
     # Show the form if authenticated
-    if st.session_state.show_form:
-        with st.form(key="data_form", clear_on_submit=True):
+    if st.session_state.show_form_buku:
+        with st.form(key="data_form_buku", clear_on_submit=True):
             EMAIL = st.text_input(label="Email*")
             NAMA_PEMINJAM = st.text_input("Nama Peminjam*")
             UNIT = st.selectbox(label="Unit*", options=TIPE_UNIT, index=None)
