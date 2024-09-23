@@ -34,8 +34,15 @@ with st.sidebar:
 
 # Display Title and Description
 if selected == "Home":
-    st.title('Website Informasi LPM UNPAR')
-    st.markdown('Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).')
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <h1>Website Informasi LPM UNPAR</h1>
+        Website ini berisi informasi data internal mengenai Lembaga Penjaminan Mutu (LPM) Universitas Katolik Parahyangan (UNPAR).
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 elif selected == "Data Sertifikat Akreditasi":
     st.title("Data Sertifikat Akreditasi")
     st.markdown('Berikut dibawah ini adalah data sertifikat akreditasi program studi yang dimiliki oleh Universitas Katolik Parahyangan (UNPAR) dari tahun 1998.')
