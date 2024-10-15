@@ -239,7 +239,7 @@ elif selected == "Form Peminjaman Buku LPM":
     # Display the filtered dataframe with the new numbering column
     st.dataframe(filtered_data_buku, use_container_width=True, hide_index=True)
 
-    
+    # list tipe unit
     TIPE_UNIT = [
     "Rektorat",
     "Kantor Sekretariat Rektorat",
