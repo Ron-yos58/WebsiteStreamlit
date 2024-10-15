@@ -267,6 +267,7 @@ elif selected == "Form Peminjaman Buku LPM":
     "Fakultas Filsafat",
     "Fakultas Teknologi Informasi dan Sains",
     "Fakultas Kedokteran",
+    "Fakultas Keguruan dan Ilmu Pendidikan",
     "Program Vokasi dan Profesi"
     ]
     
