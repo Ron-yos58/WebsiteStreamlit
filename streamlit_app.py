@@ -263,12 +263,12 @@ elif selected == "Form Peminjaman Buku LPM":
     "Fakultas Hukum",
     "Fakultas Ilmu Sosial dan Ilmu Politik",
     "Fakultas Teknik",
-    "Fakultas Teknologi Industri",
+    "Fakultas Teknologi Rekayasa",
     "Fakultas Filsafat",
-    "Fakultas Teknologi Informasi dan Sains",
+    "Fakultas Sains",
     "Fakultas Kedokteran",
     "Fakultas Keguruan dan Ilmu Pendidikan",
-    "Program Vokasi dan Profesi"
+    "Fakultas Vokasi"
     ]
     
     # Initialize the session state for showing/hiding the form
